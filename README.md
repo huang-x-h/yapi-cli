@@ -4,8 +4,16 @@ YApi 接口管理平台 CLI 工具，供 AI Agent 调用操作 YApi 系统。
 
 ## 安装
 
+1. 命令工具安装
+
 ```bash
 npm install -g @huang.xinghui/yapi-cli
+```
+
+2. Agent 技能安装
+
+```bash
+npx skills add huang-x-h/yapi-cli -y -g
 ```
 
 ## 配置
