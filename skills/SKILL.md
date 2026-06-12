@@ -5,13 +5,14 @@ description: Query and manage YApi interface management system. Supports queryin
 
 # YApi Skill
 
-通过 `yapi-api.js` 操作 YApi，无需安装任何 npm 包，只需 Node.js 18+。
+通过纯 Node.js 脚本 `yapi-api.js` 操作 YApi，无需安装任何 npm 包。
 
 ## Setup
 
-**通过 Agent 下载**：Agent 会自动在项目根目录放置 `yapi-api.js`，如果不存在请告知用户。
+**首次使用：**
 
-项目根目录创建 `.env` 文件：
+1. 把技能目录里的 `yapi-api.js` 复制到项目根目录（如果不存在）
+2. 项目根目录创建 `.env` 文件：
 
 ```bash
 YAPI_HOST=http://your-yapi.com
@@ -19,58 +20,57 @@ YAPI_PROJECT_TOKEN=xxx-your-token-xxx
 YAPI_USERNAME=yourname
 ```
 
-## Workflows
+> Token 在 YApi 项目设置 → Token 管理获取。Token 是项目级的，服务端自动识别项目。
+
+## 命令
 
 所有命令通过 `node yapi-api.js <command>` 执行。
 
-### 1. 查询分类和接口
+### 查询
 
 ```bash
 node yapi-api.js categories <projectId>
 node yapi-api.js interfaces <projectId>
 node yapi-api.js interfaces <projectId> --cat <catId>
-```
-
-### 2. 查看接口详情 / 搜索
-
-```bash
 node yapi-api.js interface <interfaceId>
-node yapi-api.js search "<关键字>" --project <projectId>
+node yapi-api.js search "<keyword>" --project <projectId>
 ```
 
-### 3. 解析 Java Controller
+### Java Controller 解析 + 创建（核心）
 
 ```bash
+# 解析预览
 node yapi-api.js parse-java UserController.java
-```
 
-### 4. 从 Java 创建接口到 YApi（核心）
-
-```bash
-# 预览 → 确认
+# 预览创建效果（不实际创建）
 node yapi-api.js create-from-java UserController.java --catid <catId> --dry-run
+
+# 创建到 YApi
 node yapi-api.js create-from-java UserController.java --catid <catId>
 
 # 只创建某个方法
 node yapi-api.js create-from-java UserController.java --catid <catId> --method getUserList
 ```
 
-### 5. 手动创建 / 更新 / 删除
+### 手动创建 / 更新 / 删除
 
 ```bash
 # 创建
 node yapi-api.js create-interface --title "用户列表" --path /api/user/list --method GET --catid <catId>
 
-# 更新状态
+# 更新
 node yapi-api.js update-interface --id <interfaceId> --status done
 
 # 删除（需二次确认）
 node yapi-api.js delete-interface <interfaceId>
-node yapi-api.js delete-interface <interfaceId> --yes    # 跳过确认
+node yapi-api.js delete-interface <interfaceId> --yes
 ```
 
-### 6. 查看配置
+### 其他
 
 ```bash
-node yapi-api.js config
+node yapi-api.js config                              # 查看配置
+node yapi-api.js add-category <projectId> <name>     # 添加分类
 ```
+
+> 详细参数和说明见 [REFERENCE.md](REFERENCE.md)

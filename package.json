@@ -1,18 +1,10 @@
 {
-  "name": "@huang.xinghui/yapi-cli",
-  "version": "0.1.0",
-  "description": "YApi CLI for AI Agent",
+  "name": "@huang.xinghui/yapi-skill",
+  "version": "0.2.0",
+  "description": "YApi interface management skill for AI Agent",
   "type": "module",
-  "bin": {
-    "yapi-cli": "./bin/yapi.js"
-  },
   "scripts": {
-    "start": "node ./bin/yapi.js"
-  },
-  "dependencies": {
-    "commander": "^12.0.0",
-    "axios": "^1.6.0",
-    "dotenv": "^16.3.0"
+    "start": "node skills/yapi-api.js"
   },
   "engines": {
     "node": ">=18.0.0"
