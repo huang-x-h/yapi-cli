@@ -60,11 +60,9 @@ node yapi-api.js create-interface --title "用户列表" --path /api/user/list -
 
 # 更新
 node yapi-api.js update-interface --id <interfaceId> --status done
-
-# 删除（需二次确认）
-node yapi-api.js delete-interface <interfaceId>
-node yapi-api.js delete-interface <interfaceId> --yes
 ```
+
+> 注：删除接口不在 token 权限范围内，需要在 YApi 后台手动操作。
 
 ### 其他
 

@@ -15,7 +15,6 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import readline from 'readline';
 
 // ── 加载 .env ──────────────────────────────────────────────
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -171,11 +170,6 @@ async function updateInterface(opts) {
   return await api('interface/save', payload, 'POST');
 }
 
-// ── 删除接口 ──────────────────────────────────────────────
-async function deleteInterface(id) {
-  return await api('interface/del', { id }, 'GET');
-}
-
 // ── 添加分类 ──────────────────────────────────────────────
 async function addCategory(projectId, name, desc) {
   return await api('project/add_cat', { pid: projectId, name, desc: desc || '' }, 'POST');
@@ -269,7 +263,6 @@ Commands:
   create-interface ...                      Create interface
   create-from-java <file> [options]         Parse Java + create in YApi
   update-interface --id <id> [options]      Update interface
-  delete-interface <id> [--yes]             Delete interface
   add-category <pid> <name>                 Add category
 
 Examples:
@@ -400,22 +393,6 @@ Examples:
         }
         const result = await updateInterface(uOpts);
         console.log('Updated:', result._id || result.id);
-        break;
-      }
-
-      case 'delete-interface': {
-        if (!args[1]) throw new Error('Usage: node yapi-api.js delete-interface <id> [--yes]');
-        if (!args.includes('--yes')) {
-          const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-          const answer = await new Promise(r => rl.question('Delete interface ' + args[1] + '? [y/N] ', r));
-          rl.close();
-          if (answer.trim().toLowerCase() !== 'y' && answer.trim().toLowerCase() !== 'yes') {
-            console.log('Cancelled.');
-            return;
-          }
-        }
-        await deleteInterface(args[1]);
-        console.log('Deleted:', args[1]);
         break;
       }
 

@@ -23,7 +23,6 @@
 | `create-interface [options]` | 创建接口 |
 | `create-from-java <file> [options]` | 解析 Java + 创建 |
 | `update-interface [options]` | 更新接口 |
-| `delete-interface <id> [--yes]` | 删除接口 |
 | `add-category <projectId> <name> [desc]` | 添加分类 |
 
 ## create-interface 选项
