@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * yapi-api.js - YApi CLI 独立脚本
+ * yapi-api.js - YApi 独立脚本
  * 
  * 纯 Node.js 内置模块，无需安装任何 npm 包。
  * 使用方法: node yapi-api.js <command> [options]
@@ -250,7 +250,7 @@ function parseJavaFile(filePath) {
   return result;
 }
 
-// ── CLI 入口 ──────────────────────────────────────────────
+// ── 入口 ──────────────────────────────────────────────────
 async function main() {
   const args = process.argv.slice(2);
   const cmd = args[0];
