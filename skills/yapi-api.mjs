@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 /**
- * yapi-api.js - YApi 独立脚本
+ * yapi-api.mjs - YApi 独立脚本
  * 
  * 纯 Node.js 内置模块，无需安装任何 npm 包。
- * 使用方法: node yapi-api.js <command> [options]
+ * 使用方法: node yapi-api.mjs <command> [options]
  * 
  * 配置: 项目根目录 .env 文件
  *   YAPI_HOST=http://your-yapi.com
@@ -251,7 +251,7 @@ async function main() {
 
   if (!cmd || cmd === '--help' || cmd === '-h') {
     console.log(`
-Usage: node yapi-api.js <command> [options]
+Usage: node yapi-api.mjs <command> [options]
 
 Commands:
   config                                    Show current config
@@ -266,9 +266,9 @@ Commands:
   add-category <pid> <name>                 Add category
 
 Examples:
-  node yapi-api.js categories 123
-  node yapi-api.js parse-java UserController.java
-  node yapi-api.js create-from-java UserController.java --catid 456
+  node yapi-api.mjs categories 123
+  node yapi-api.mjs parse-java UserController.java
+  node yapi-api.mjs create-from-java UserController.java --catid 456
 `);
     return;
   }
@@ -283,14 +283,14 @@ Examples:
       }
 
       case 'categories': {
-        if (!args[1]) throw new Error('Usage: node yapi-api.js categories <projectId>');
+        if (!args[1]) throw new Error('Usage: node yapi-api.mjs categories <projectId>');
         const list = await categories(args[1]);
         console.log(JSON.stringify(list, null, 2));
         break;
       }
 
       case 'interfaces': {
-        if (!args[1]) throw new Error('Usage: node yapi-api.js interfaces <projectId> [--cat <id>]');
+        if (!args[1]) throw new Error('Usage: node yapi-api.mjs interfaces <projectId> [--cat <id>]');
         const catIdx = args.indexOf('--cat');
         const opts = catIdx !== -1 ? { cat: args[catIdx + 1] } : {};
         const list = await interfaces(args[1], opts);
@@ -299,14 +299,14 @@ Examples:
       }
 
       case 'interface': {
-        if (!args[1]) throw new Error('Usage: node yapi-api.js interface <id>');
+        if (!args[1]) throw new Error('Usage: node yapi-api.mjs interface <id>');
         const detail = await interfaceDetail(args[1]);
         console.log(JSON.stringify(detail, null, 2));
         break;
       }
 
       case 'search': {
-        if (!args[1]) throw new Error('Usage: node yapi-api.js search <keyword> [--project <id>]');
+        if (!args[1]) throw new Error('Usage: node yapi-api.mjs search <keyword> [--project <id>]');
         const pIdx = args.indexOf('--project');
         const pid = pIdx !== -1 ? args[pIdx + 1] : null;
         const results = await search(args[1], pid);
@@ -315,7 +315,7 @@ Examples:
       }
 
       case 'parse-java': {
-        if (!args[1]) throw new Error('Usage: node yapi-api.js parse-java <file>');
+        if (!args[1]) throw new Error('Usage: node yapi-api.mjs parse-java <file>');
         const methods = parseJavaFile(args[1]);
         console.log(JSON.stringify({ className: path.basename(args[1], '.java'), methods }, null, 2));
         break;
@@ -345,7 +345,7 @@ Examples:
       }
 
       case 'create-from-java': {
-        if (!args[1]) throw new Error('Usage: node yapi-api.js create-from-java <file> [--catid <id>] [--username <name>] [--method <name>] [--dry-run]');
+        if (!args[1]) throw new Error('Usage: node yapi-api.mjs create-from-java <file> [--catid <id>] [--username <name>] [--method <name>] [--dry-run]');
         const catIdx2 = args.indexOf('--catid');
         const catid = catIdx2 !== -1 ? args[catIdx2 + 1] : '';
         const uIdx = args.indexOf('--username');
@@ -383,7 +383,7 @@ Examples:
         const idIdx = args.indexOf('--id');
         if (idIdx === -1) throw new Error('--id is required');
         const uOpts = { id: args[idIdx + 1] };
-        for (const flag of ['--title', '--path', '--method', '--status', '--desc', '--catid']) {
+        for (const flag of ['--title', '--path', '--method', '--status', '--desc', '--catid', '--pid']) {
           const fi = args.indexOf(flag);
           if (fi !== -1) uOpts[flag.replace(/^--/, '')] = args[fi + 1];
         }
@@ -397,7 +397,7 @@ Examples:
       }
 
       case 'add-category': {
-        if (!args[1] || !args[2]) throw new Error('Usage: node yapi-api.js add-category <projectId> <name>');
+        if (!args[1] || !args[2]) throw new Error('Usage: node yapi-api.mjs add-category <projectId> <name>');
         const r = await addCategory(args[1], args[2], args.slice(3).join(' '));
         console.log('Category created:', r._id || r.id);
         break;
@@ -405,7 +405,7 @@ Examples:
 
       default:
         console.error('Unknown command:', cmd);
-        console.log('Run "node yapi-api.js --help" for usage.');
+        console.log('Run "node yapi-api.mjs --help" for usage.');
         process.exit(1);
     }
   } catch (e) {
